@@ -73,11 +73,20 @@ app.innerHTML = `
         ${artists
           .map(
             (artist, index) => `
-              <article class="artist-card" style="--i:${index}">
-                <span>${artist.date}</span>
-                <h3>${artist.name}</h3>
-                <p>${artist.tone}</p>
-              </article>
+              <a class="artist-card" style="--i:${index}" href="https://www.instagram.com/keepaustinlive_/?hl=en" aria-label="Watch ${artist.name} on Keep Austin Live Instagram">
+                <div class="video-eye" aria-hidden="true">
+                  <span class="video-eye__scan"></span>
+                  <span class="video-eye__shape">
+                    <span class="video-eye__iris"></span>
+                    <span class="video-eye__play"></span>
+                  </span>
+                </div>
+                <div class="artist-card__copy">
+                  <span>${artist.date}</span>
+                  <h3>${artist.name}</h3>
+                  <p>${artist.tone}</p>
+                </div>
+              </a>
             `
           )
           .join("")}
