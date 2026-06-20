@@ -23,7 +23,7 @@ app.innerHTML = `
       <div class="hero__media" aria-hidden="true"></div>
       <nav class="nav">
         <a class="brand" href="#top" aria-label="Keep Austin Live home">
-          <span class="brand__mark">KAL</span>
+          <img class="brand__logo" src="/assets/keep-austin-live-logo.jpg" alt="" />
           <span>Keep Austin Live</span>
         </a>
         <div class="nav__links">
@@ -34,6 +34,7 @@ app.innerHTML = `
       </nav>
 
       <div class="hero__content" id="top">
+        <img class="hero__crest" src="/assets/keep-austin-live-logo.jpg" alt="Keep Austin Live logo" />
         <p class="kicker">Content Capital Of the World</p>
         <h1>Keep Austin Live</h1>
         <p class="hero__copy">
