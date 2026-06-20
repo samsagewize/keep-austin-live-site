@@ -55,6 +55,16 @@ const stats = [
 const app = document.querySelector("#app");
 
 app.innerHTML = `
+  <div class="loading-screen" data-loading-screen>
+    <div class="loading-scene" aria-hidden="true"></div>
+    <div class="loading-ui">
+      <img class="loading-logo" src="/assets/keep-austin-live-logo.jpg" alt="Keep Austin Live logo" />
+      <p class="kicker">Initializing live signal</p>
+      <h2>Keep Austin Live</h2>
+      <div class="loading-meter" aria-hidden="true"><span></span></div>
+      <button class="loading-enter" type="button">Enter</button>
+    </div>
+  </div>
   <main>
     <section class="hero" aria-label="Keep Austin Live">
       <div class="hero__scene" aria-hidden="true"></div>
@@ -182,6 +192,23 @@ app.innerHTML = `
 `;
 
 mountHeroScene(document.querySelector(".hero__scene"));
+const unmountLoadingScene = mountHeroScene(document.querySelector(".loading-scene"), { intro: true });
+
+const loadingScreen = document.querySelector("[data-loading-screen]");
+const enterButton = document.querySelector(".loading-enter");
+
+function closeLoadingScreen() {
+  if (!loadingScreen || loadingScreen.dataset.done) return;
+  loadingScreen.dataset.done = "true";
+  loadingScreen.classList.add("is-hidden");
+  window.setTimeout(() => {
+    unmountLoadingScene();
+    loadingScreen.remove();
+  }, 850);
+}
+
+window.setTimeout(closeLoadingScreen, 2600);
+enterButton?.addEventListener("click", closeLoadingScreen);
 
 const slider = document.querySelector(".artist-grid");
 const slides = Array.from(document.querySelectorAll(".artist-card"));

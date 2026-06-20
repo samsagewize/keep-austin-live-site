@@ -1,11 +1,12 @@
 import * as THREE from "three";
 
-export function mountHeroScene(container) {
+export function mountHeroScene(container, options = {}) {
   if (!container) return () => {};
+  const { intro = false } = options;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-  camera.position.set(0, 0.1, 7.4);
+  camera.position.set(0, intro ? 0 : 0.1, intro ? 6.4 : 7.4);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -21,7 +22,7 @@ export function mountHeroScene(container) {
   scene.add(logoGroup);
 
   const badge = new THREE.Mesh(
-    new THREE.BoxGeometry(3.15, 3.15, 0.08),
+    new THREE.BoxGeometry(intro ? 2.72 : 3.15, intro ? 2.72 : 3.15, intro ? 0.13 : 0.08),
     [
       new THREE.MeshStandardMaterial({ color: 0x0d2a1f, metalness: 0.55, roughness: 0.34 }),
       new THREE.MeshStandardMaterial({ color: 0x0d2a1f, metalness: 0.55, roughness: 0.34 }),
@@ -54,10 +55,10 @@ export function mountHeroScene(container) {
     rings.add(ring);
   }
 
-  const particleCount = 520;
+  const particleCount = intro ? 760 : 520;
   const positions = new Float32Array(particleCount * 3);
   for (let i = 0; i < particleCount; i += 1) {
-    const radius = 2.5 + Math.random() * 5.8;
+    const radius = (intro ? 1.8 : 2.5) + Math.random() * (intro ? 6.8 : 5.8);
     const angle = Math.random() * Math.PI * 2;
     positions[i * 3] = Math.cos(angle) * radius;
     positions[i * 3 + 1] = (Math.random() - 0.5) * 5.4;
@@ -100,21 +101,21 @@ export function mountHeroScene(container) {
     if (!clientWidth || !clientHeight) return;
     renderer.setSize(clientWidth, clientHeight, false);
     camera.aspect = clientWidth / clientHeight;
-    camera.position.z = clientWidth < 720 ? 8.7 : 7.4;
-    logoGroup.scale.setScalar(clientWidth < 720 ? 0.68 : 1);
+    camera.position.z = clientWidth < 720 ? (intro ? 7.4 : 8.7) : intro ? 6.4 : 7.4;
+    logoGroup.scale.setScalar(clientWidth < 720 ? (intro ? 0.76 : 0.68) : 1);
     camera.updateProjectionMatrix();
   }
 
   function animate(time) {
     if (disposed) return;
     const t = time * 0.001;
-    logoGroup.rotation.y = Math.sin(t * 0.55) * 0.18;
-    logoGroup.rotation.x = Math.sin(t * 0.42) * 0.055;
-    logoGroup.position.y = Math.sin(t * 0.8) * 0.08;
-    rings.rotation.z = t * 0.12;
-    rings.rotation.y = Math.sin(t * 0.18) * 0.18;
-    particles.rotation.y = t * 0.035;
-    particles.rotation.x = Math.sin(t * 0.08) * 0.08;
+    logoGroup.rotation.y = intro ? t * 0.34 : Math.sin(t * 0.55) * 0.18;
+    logoGroup.rotation.x = intro ? Math.sin(t * 0.7) * 0.12 : Math.sin(t * 0.42) * 0.055;
+    logoGroup.position.y = Math.sin(t * (intro ? 1.2 : 0.8)) * (intro ? 0.12 : 0.08);
+    rings.rotation.z = t * (intro ? 0.28 : 0.12);
+    rings.rotation.y = Math.sin(t * (intro ? 0.36 : 0.18)) * (intro ? 0.28 : 0.18);
+    particles.rotation.y = t * (intro ? 0.08 : 0.035);
+    particles.rotation.x = Math.sin(t * (intro ? 0.16 : 0.08)) * (intro ? 0.13 : 0.08);
     renderer.render(scene, camera);
     frameId = requestAnimationFrame(animate);
   }
