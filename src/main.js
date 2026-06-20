@@ -1,12 +1,12 @@
 import "./styles.css";
 
 const artists = [
-  { name: "@nicthecig", date: "Jun 16, 2026", tone: "Live room heat" },
-  { name: "@aliza1k", date: "Jun 15, 2026", tone: "Mic Drop set" },
-  { name: "@yvng.slxgg", date: "Jun 8, 2026", tone: "Austin spotlight" },
-  { name: "@blakchyl", date: "Jun 2, 2026", tone: "Performance cut" },
-  { name: "@dirtyglove_cjay", date: "Jun 2026", tone: "Raw stage energy" },
-  { name: "@floss_thaboss", date: "Apr 2026", tone: "Street-level sound" }
+  { name: "@nicthecig", date: "Jun 16, 2026", tone: "Live room heat", video: "/assets/drop-video-1.mp4" },
+  { name: "@aliza1k", date: "Jun 15, 2026", tone: "Mic Drop set", video: "/assets/drop-video-2.mp4" },
+  { name: "@yvng.slxgg", date: "Jun 8, 2026", tone: "Austin spotlight", video: "/assets/drop-video-3.mp4" },
+  { name: "@blakchyl", date: "Jun 2, 2026", tone: "Performance cut", video: "/assets/drop-video-4.mp4" },
+  { name: "@dirtyglove_cjay", date: "Jun 2026", tone: "Raw stage energy", video: "/assets/drop-video-5.mp4" },
+  { name: "@floss_thaboss", date: "Apr 2026", tone: "Street-level sound", video: "/assets/drop-video-6.mp4" }
 ];
 
 const stats = [
@@ -78,7 +78,7 @@ app.innerHTML = `
                   <span class="video-eye__scan"></span>
                   <span class="video-eye__shape">
                     <span class="video-eye__viewer">
-                      <span class="video-eye__stage"></span>
+                      <video class="drop-video" src="${artist.video}" autoplay muted loop playsinline preload="auto" poster="/assets/hero-stage.png"></video>
                       <span class="video-eye__iris"></span>
                     </span>
                     <span class="video-eye__play"></span>
@@ -116,3 +116,9 @@ app.innerHTML = `
     </section>
   </main>
 `;
+
+document.querySelectorAll(".drop-video").forEach((video) => {
+  video.muted = true;
+  video.load();
+  video.play().catch(() => {});
+});
