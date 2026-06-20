@@ -313,25 +313,55 @@ h2 {
   margin-bottom: clamp(22px, 4vw, 42px);
 }
 
+.slider-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.slider-button {
+  width: 42px;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  background: rgba(10, 8, 7, 0.5);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.drop-slider {
+  width: min(480px, 100%);
+  margin-inline: auto;
+}
+
 .artist-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.artist-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .artist-card {
-  min-height: 610px;
-  padding: 22px;
+  flex: 0 0 min(360px, 100%);
+  min-height: 0;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 18px;
+  gap: 12px;
   overflow: hidden;
   position: relative;
+  scroll-snap-align: start;
   border: 1px solid var(--line);
   background:
-    radial-gradient(circle at 22% 12%, rgba(245, 165, 36, calc(0.2 + var(--i) * 0.012)), transparent 32%),
-    linear-gradient(150deg, rgba(13, 62, 43, 0.72), rgba(13, 9, 9, 0.28) 48%, rgba(214, 40, 40, 0.24)),
+    radial-gradient(circle at 18% 12%, rgba(245, 165, 36, calc(0.12 + var(--i) * 0.01)), transparent 28%),
+    linear-gradient(150deg, rgba(13, 62, 43, 0.44), rgba(13, 9, 9, 0.22) 52%, rgba(214, 40, 40, 0.12)),
     var(--panel);
 }
 
@@ -352,7 +382,7 @@ h2 {
   content: "";
   position: absolute;
   inset: auto 0 0;
-  height: 48%;
+  height: 34%;
   background: linear-gradient(0deg, rgba(10, 8, 7, 0.92), transparent);
   pointer-events: none;
 }
@@ -374,8 +404,8 @@ h2 {
 }
 
 .artist-card h3 {
-  margin: 10px 0 8px;
-  font-size: clamp(1.45rem, 2.8vw, 2.35rem);
+  margin: 8px 0 6px;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
   overflow-wrap: anywhere;
 }
 
@@ -388,7 +418,7 @@ h2 {
 .embed-frame {
   position: relative;
   width: 100%;
-  height: 470px;
+  height: 390px;
   overflow: hidden;
   border: 1px solid rgba(246, 239, 228, 0.18);
   background: rgba(10, 8, 7, 0.72);
@@ -410,6 +440,28 @@ h2 {
   font-weight: 900;
   text-transform: uppercase;
   border-bottom: 1px solid rgba(246, 239, 228, 0.44);
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.slider-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(246, 239, 228, 0.28);
+  cursor: pointer;
+}
+
+.slider-dot[aria-current] {
+  width: 24px;
+  background: var(--gold);
 }
 
 .fund {
@@ -449,8 +501,7 @@ h2 {
   .statbar,
   .intro,
   .fund,
-  .book,
-  .artist-grid {
+  .book {
     grid-template-columns: 1fr;
   }
 
@@ -463,12 +514,12 @@ h2 {
     border-bottom: 0;
   }
 
-  .artist-card {
-    min-height: 560px;
+  .drop-slider {
+    width: min(390px, 100%);
   }
 
   .embed-frame {
-    height: 430px;
+    height: 390px;
   }
 
   .book .button {
@@ -488,6 +539,10 @@ h2 {
 
   .contact-dropdown__panel {
     width: 100%;
+  }
+
+  .section-heading {
+    align-items: flex-start;
   }
 
   h1 {

@@ -70,8 +70,7 @@ app.innerHTML = `
           <details class="contact-menu">
             <summary>Contact</summary>
             <div class="contact-menu__panel">
-              <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Instagram</a>
-              <a href="https://www.instagram.com/artistallegiance/">Artist Allegiance</a>
+              <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Message @keepaustinlive_</a>
             </div>
           </details>
         </div>
@@ -89,7 +88,6 @@ app.innerHTML = `
             <summary class="button button--ghost">Contact</summary>
             <div class="contact-dropdown__panel">
               <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Message @keepaustinlive_</a>
-              <a href="https://www.instagram.com/artistallegiance/">Message @artistallegiance</a>
             </div>
           </details>
           <a class="button button--ghost" href="#artists">Recent Drops</a>
@@ -108,7 +106,7 @@ app.innerHTML = `
       </div>
       <div class="intro__panel">
         <p>
-          Book a Live Performance or Mic Drop session through @keepaustinlive_ and @artistallegiance.
+          Book a Live Performance or Mic Drop session through @keepaustinlive_.
           Built around Austin artists, quick turnarounds, and social-ready performance energy.
         </p>
       </div>
@@ -116,14 +114,21 @@ app.innerHTML = `
 
     <section class="lineup" id="artists" aria-label="Recent Keep Austin Live artists">
       <div class="section-heading">
-        <p class="eyebrow">Recent drops</p>
-        <h2>Artists on the feed</h2>
+        <div>
+          <p class="eyebrow">Recent drops</p>
+          <h2>Artists on the feed</h2>
+        </div>
+        <div class="slider-controls" aria-label="Recent drops controls">
+          <button class="slider-button" type="button" data-slide-dir="-1" aria-label="Previous drop">‹</button>
+          <button class="slider-button" type="button" data-slide-dir="1" aria-label="Next drop">›</button>
+        </div>
       </div>
-      <div class="artist-grid">
+      <div class="drop-slider">
+        <div class="artist-grid" tabindex="0" aria-label="Recent drops slideshow">
         ${artists
           .map(
             (artist, index) => `
-              <article class="artist-card embed-card" style="--i:${index}">
+              <article class="artist-card embed-card" style="--i:${index}" data-slide-index="${index}">
                 <div class="embed-frame">
                   <iframe
                     title="${artist.name} Keep Austin Live Instagram reel"
@@ -143,6 +148,10 @@ app.innerHTML = `
             `
           )
           .join("")}
+        </div>
+        <div class="slider-dots" aria-label="Recent drops slide dots">
+          ${artists.map((artist, index) => `<button class="slider-dot" type="button" data-slide-to="${index}" aria-label="Show ${artist.name}"></button>`).join("")}
+        </div>
       </div>
     </section>
 
@@ -166,7 +175,6 @@ app.innerHTML = `
         <summary class="button button--primary">Contact Booking</summary>
         <div class="contact-dropdown__panel">
           <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Message @keepaustinlive_</a>
-          <a href="https://www.instagram.com/artistallegiance/">Message @artistallegiance</a>
         </div>
       </details>
     </section>
@@ -174,3 +182,50 @@ app.innerHTML = `
 `;
 
 mountHeroScene(document.querySelector(".hero__scene"));
+
+const slider = document.querySelector(".artist-grid");
+const slides = Array.from(document.querySelectorAll(".artist-card"));
+const dots = Array.from(document.querySelectorAll(".slider-dot"));
+
+function setActiveSlide(index) {
+  dots.forEach((dot, dotIndex) => dot.toggleAttribute("aria-current", dotIndex === index));
+}
+
+function getCurrentSlideIndex() {
+  if (!slider || !slides.length) return 0;
+  const sliderLeft = slider.getBoundingClientRect().left;
+  return slides.reduce(
+    (closest, slide, index) => {
+      const distance = Math.abs(slide.getBoundingClientRect().left - sliderLeft);
+      return distance < closest.distance ? { index, distance } : closest;
+    },
+    { index: 0, distance: Number.POSITIVE_INFINITY }
+  ).index;
+}
+
+function goToSlide(index) {
+  if (!slides[index]) return;
+  slides[index].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  setActiveSlide(index);
+}
+
+document.querySelectorAll("[data-slide-dir]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const direction = Number(button.dataset.slideDir);
+    const nextIndex = (getCurrentSlideIndex() + direction + slides.length) % slides.length;
+    goToSlide(nextIndex);
+  });
+});
+
+dots.forEach((dot) => {
+  dot.addEventListener("click", () => goToSlide(Number(dot.dataset.slideTo)));
+});
+
+if (slider) {
+  let scrollFrame = 0;
+  slider.addEventListener("scroll", () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(() => setActiveSlide(getCurrentSlideIndex()));
+  });
+  setActiveSlide(0);
+}
