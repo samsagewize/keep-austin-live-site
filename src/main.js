@@ -77,7 +77,10 @@ app.innerHTML = `
                 <div class="video-eye" aria-hidden="true">
                   <span class="video-eye__scan"></span>
                   <span class="video-eye__shape">
-                    <span class="video-eye__iris"></span>
+                    <span class="video-eye__viewer">
+                      <span class="video-eye__stage"></span>
+                      <span class="video-eye__iris"></span>
+                    </span>
                     <span class="video-eye__play"></span>
                   </span>
                 </div>
