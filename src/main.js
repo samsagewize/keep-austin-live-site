@@ -1,7 +1,14 @@
 import "./styles.css";
 
 const artists = [
-  { name: "@nicthecig", date: "Jun 16, 2026", tone: "Live room heat", video: "/assets/drop-video-1.mp4" },
+  {
+    name: "@nicthecig",
+    date: "Jun 16, 2026",
+    tone: "Instagram post frame",
+    video: "/assets/drop-video-1.mp4",
+    frame: "/assets/instagram-frame-nicthecig.jpg",
+    link: "https://www.instagram.com/reel/DZqQEaYxOLz/"
+  },
   { name: "@aliza1k", date: "Jun 15, 2026", tone: "Mic Drop set", video: "/assets/drop-video-2.mp4" },
   { name: "@yvng.slxgg", date: "Jun 8, 2026", tone: "Austin spotlight", video: "/assets/drop-video-3.mp4" },
   { name: "@blakchyl", date: "Jun 2, 2026", tone: "Performance cut", video: "/assets/drop-video-4.mp4" },
@@ -73,12 +80,16 @@ app.innerHTML = `
         ${artists
           .map(
             (artist, index) => `
-              <a class="artist-card" style="--i:${index}" href="https://www.instagram.com/keepaustinlive_/?hl=en" aria-label="Watch ${artist.name} on Keep Austin Live Instagram">
+              <a class="artist-card" style="--i:${index}" href="${artist.link ?? "https://www.instagram.com/keepaustinlive_/?hl=en"}" aria-label="Watch ${artist.name} on Keep Austin Live Instagram">
                 <div class="video-eye" aria-hidden="true">
                   <span class="video-eye__scan"></span>
                   <span class="video-eye__shape">
                     <span class="video-eye__viewer">
-                      <video class="drop-video" src="${artist.video}" autoplay muted loop playsinline preload="auto" poster="/assets/hero-stage.png"></video>
+                      ${
+                        artist.frame
+                          ? `<img class="drop-frame" src="${artist.frame}" alt="" loading="lazy" />`
+                          : `<video class="drop-video" src="${artist.video}" autoplay muted loop playsinline preload="auto" poster="/assets/hero-stage.png"></video>`
+                      }
                       <span class="video-eye__iris"></span>
                     </span>
                     <span class="video-eye__play"></span>
