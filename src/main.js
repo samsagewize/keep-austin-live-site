@@ -5,16 +5,45 @@ const artists = [
   {
     name: "@nicthecig",
     date: "Jun 16, 2026",
-    tone: "Instagram post frame",
-    video: "/assets/drop-video-1.mp4",
-    frame: "/assets/instagram-frame-nicthecig.jpg",
-    link: "https://www.instagram.com/reel/DZqQEaYxOLz/"
+    tone: "Mic Drop Performance",
+    link: "https://www.instagram.com/reel/DZqQEaYxOLz/",
+    embed: "https://www.instagram.com/reel/DZqQEaYxOLz/embed"
   },
-  { name: "@aliza1k", date: "Jun 15, 2026", tone: "Mic Drop set", video: "/assets/drop-video-2.mp4" },
-  { name: "@yvng.slxgg", date: "Jun 8, 2026", tone: "Austin spotlight", video: "/assets/drop-video-3.mp4" },
-  { name: "@blakchyl", date: "Jun 2, 2026", tone: "Performance cut", video: "/assets/drop-video-4.mp4" },
-  { name: "@dirtyglove_cjay", date: "Jun 2026", tone: "Raw stage energy", video: "/assets/drop-video-5.mp4" },
-  { name: "@floss_thaboss", date: "Apr 2026", tone: "Street-level sound", video: "/assets/drop-video-6.mp4" }
+  {
+    name: "@aliza1k",
+    date: "Jun 15, 2026",
+    tone: "Mic Drop Performance",
+    link: "https://www.instagram.com/reel/DZnZkEkx8A7/",
+    embed: "https://www.instagram.com/reel/DZnZkEkx8A7/embed"
+  },
+  {
+    name: "@yvng.slxgg",
+    date: "Jun 8, 2026",
+    tone: "Austin spotlight",
+    link: "https://www.instagram.com/reel/DZVovXtxpgh/",
+    embed: "https://www.instagram.com/reel/DZVovXtxpgh/embed"
+  },
+  {
+    name: "@blakchyl",
+    date: "Jun 2, 2026",
+    tone: "Mic Drop Performance",
+    link: "https://www.instagram.com/reel/DZGaJoNRJPw/",
+    embed: "https://www.instagram.com/reel/DZGaJoNRJPw/embed"
+  },
+  {
+    name: "@dirtyglove_cjay",
+    date: "Jun 2026",
+    tone: "Raw stage energy",
+    link: "https://www.instagram.com/reel/DZBIPnQxWzr/",
+    embed: "https://www.instagram.com/reel/DZBIPnQxWzr/embed"
+  },
+  {
+    name: "@floss_thaboss",
+    date: "Apr 2026",
+    tone: "Mic Drop Performance",
+    link: "https://www.instagram.com/reel/DXFZy2qkec7/",
+    embed: "https://www.instagram.com/reel/DXFZy2qkec7/embed"
+  }
 ];
 
 const stats = [
@@ -38,6 +67,13 @@ app.innerHTML = `
           <a href="#mic-drop">Mic Drop</a>
           <a href="#artists">Artists</a>
           <a href="#book">Book</a>
+          <details class="contact-menu">
+            <summary>Contact</summary>
+            <div class="contact-menu__panel">
+              <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Instagram</a>
+              <a href="https://www.instagram.com/artistallegiance/">Artist Allegiance</a>
+            </div>
+          </details>
         </div>
       </nav>
 
@@ -49,6 +85,13 @@ app.innerHTML = `
         </p>
         <div class="hero__actions">
           <a class="button button--primary" href="https://www.instagram.com/keepaustinlive_/?hl=en">Book on Instagram</a>
+          <details class="contact-dropdown">
+            <summary class="button button--ghost">Contact</summary>
+            <div class="contact-dropdown__panel">
+              <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Message @keepaustinlive_</a>
+              <a href="https://www.instagram.com/artistallegiance/">Message @artistallegiance</a>
+            </div>
+          </details>
           <a class="button button--ghost" href="#artists">Recent Drops</a>
         </div>
       </div>
@@ -80,27 +123,23 @@ app.innerHTML = `
         ${artists
           .map(
             (artist, index) => `
-              <a class="artist-card" style="--i:${index}" href="${artist.link ?? "https://www.instagram.com/keepaustinlive_/?hl=en"}" aria-label="Watch ${artist.name} on Keep Austin Live Instagram">
-                <div class="video-eye" aria-hidden="true">
-                  <span class="video-eye__scan"></span>
-                  <span class="video-eye__shape">
-                    <span class="video-eye__viewer">
-                      ${
-                        artist.frame
-                          ? `<img class="drop-frame" src="${artist.frame}" alt="" loading="lazy" />`
-                          : `<video class="drop-video" src="${artist.video}" autoplay muted loop playsinline preload="auto" poster="/assets/keep-austin-live-logo.jpg"></video>`
-                      }
-                      <span class="video-eye__iris"></span>
-                    </span>
-                    <span class="video-eye__play"></span>
-                  </span>
+              <article class="artist-card embed-card" style="--i:${index}">
+                <div class="embed-frame">
+                  <iframe
+                    title="${artist.name} Keep Austin Live Instagram reel"
+                    src="${artist.embed}"
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                  ></iframe>
                 </div>
                 <div class="artist-card__copy">
                   <span>${artist.date}</span>
                   <h3>${artist.name}</h3>
                   <p>${artist.tone}</p>
+                  <a class="drop-link" href="${artist.link}">Open on Instagram</a>
                 </div>
-              </a>
+              </article>
             `
           )
           .join("")}
@@ -123,15 +162,15 @@ app.innerHTML = `
         <p class="eyebrow">Get on stage</p>
         <h2>Ready for a Mic Drop?</h2>
       </div>
-      <a class="button button--primary" href="https://www.instagram.com/keepaustinlive_/?hl=en">Message @keepaustinlive_</a>
+      <details class="contact-dropdown contact-dropdown--book">
+        <summary class="button button--primary">Contact Booking</summary>
+        <div class="contact-dropdown__panel">
+          <a href="https://www.instagram.com/keepaustinlive_/?hl=en">Message @keepaustinlive_</a>
+          <a href="https://www.instagram.com/artistallegiance/">Message @artistallegiance</a>
+        </div>
+      </details>
     </section>
   </main>
 `;
 
 mountHeroScene(document.querySelector(".hero__scene"));
-
-document.querySelectorAll(".drop-video").forEach((video) => {
-  video.muted = true;
-  video.load();
-  video.play().catch(() => {});
-});
