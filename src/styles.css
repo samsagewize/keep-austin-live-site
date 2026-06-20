@@ -43,15 +43,20 @@ a {
   isolation: isolate;
 }
 
-.hero__media {
+.hero__scene {
   position: absolute;
   inset: 0;
   z-index: -2;
   background:
-    linear-gradient(90deg, rgba(10, 8, 7, 0.93) 0%, rgba(10, 8, 7, 0.72) 42%, rgba(10, 8, 7, 0.22) 100%),
-    linear-gradient(0deg, rgba(10, 8, 7, 0.85), rgba(10, 8, 7, 0.08) 45%),
-    url("/assets/hero-stage.png") center / cover;
-  transform: scale(1.015);
+    radial-gradient(circle at 72% 42%, rgba(27, 179, 167, 0.28), transparent 34%),
+    radial-gradient(circle at 28% 32%, rgba(245, 165, 36, 0.18), transparent 28%),
+    linear-gradient(115deg, rgba(10, 8, 7, 0.94) 0%, rgba(8, 29, 21, 0.82) 52%, rgba(10, 8, 7, 0.7) 100%);
+}
+
+.hero__scene canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .hero::after {
@@ -109,18 +114,8 @@ a {
 .hero__content {
   align-self: center;
   padding-block: clamp(64px, 12vh, 120px);
-}
-
-.hero__crest {
-  display: block;
-  width: clamp(86px, 12vw, 138px);
-  aspect-ratio: 1;
-  object-fit: cover;
-  margin-bottom: 24px;
-  border: 1px solid rgba(246, 239, 228, 0.28);
-  box-shadow:
-    0 28px 80px rgba(0, 0, 0, 0.42),
-    0 0 0 8px rgba(10, 8, 7, 0.22);
+  position: relative;
+  z-index: 1;
 }
 
 .kicker,
@@ -468,13 +463,6 @@ h2 {
 
   .hero {
     min-height: 88svh;
-  }
-
-  .hero__media {
-    background:
-      linear-gradient(90deg, rgba(10, 8, 7, 0.95) 0%, rgba(10, 8, 7, 0.76) 58%, rgba(10, 8, 7, 0.38) 100%),
-      linear-gradient(0deg, rgba(10, 8, 7, 0.86), rgba(10, 8, 7, 0.12) 45%),
-      url("/assets/hero-stage.png") 58% center / cover;
   }
 
   .statbar,

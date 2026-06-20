@@ -1,4 +1,5 @@
 import "./styles.css";
+import { mountHeroScene } from "./heroScene.js";
 
 const artists = [
   {
@@ -27,7 +28,7 @@ const app = document.querySelector("#app");
 app.innerHTML = `
   <main>
     <section class="hero" aria-label="Keep Austin Live">
-      <div class="hero__media" aria-hidden="true"></div>
+      <div class="hero__scene" aria-hidden="true"></div>
       <nav class="nav">
         <a class="brand" href="#top" aria-label="Keep Austin Live home">
           <img class="brand__logo" src="/assets/keep-austin-live-logo.jpg" alt="" />
@@ -41,7 +42,6 @@ app.innerHTML = `
       </nav>
 
       <div class="hero__content" id="top">
-        <img class="hero__crest" src="/assets/keep-austin-live-logo.jpg" alt="Keep Austin Live logo" />
         <p class="kicker">Content Capital Of the World</p>
         <h1>Keep Austin Live</h1>
         <p class="hero__copy">
@@ -88,7 +88,7 @@ app.innerHTML = `
                       ${
                         artist.frame
                           ? `<img class="drop-frame" src="${artist.frame}" alt="" loading="lazy" />`
-                          : `<video class="drop-video" src="${artist.video}" autoplay muted loop playsinline preload="auto" poster="/assets/hero-stage.png"></video>`
+                          : `<video class="drop-video" src="${artist.video}" autoplay muted loop playsinline preload="auto" poster="/assets/keep-austin-live-logo.jpg"></video>`
                       }
                       <span class="video-eye__iris"></span>
                     </span>
@@ -127,6 +127,8 @@ app.innerHTML = `
     </section>
   </main>
 `;
+
+mountHeroScene(document.querySelector(".hero__scene"));
 
 document.querySelectorAll(".drop-video").forEach((video) => {
   video.muted = true;
